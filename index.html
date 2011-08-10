@@ -1,0 +1,245 @@
+<html>
+	<head>
+		<style type="text/css">
+			html,body {
+				overflow: hidden;
+				background: gray;
+				height:100%;
+				color:white;
+				font-family:Arial,Helvetica,sans-serif;
+				font-size:12px;
+			}
+			
+			body {
+				margin:0;
+				padding:10;
+			}
+			
+			td {
+				border-bottom:2px solid white;
+				padding:3px;
+				padding-left:13px;
+				padding-right:13px;
+				margin:0;
+			}
+			
+			td#head {
+				background-color: darkblue;
+			}
+		</style>
+        <title>bitHopper-Ryouiki info</title>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript">
+		
+			function update() {
+				$.getJSON('/current', function(data) {
+					$("#current").html("Current: <span style='color:yellow;'>" + data["current"] + "</span> @" + parseInt(data["mhash"]) + "MHash");
+					var h = "<table border=0 padding=0 cellpadding=0 cellspacing=0><tr><td class=head><b>&nbsp;</b></td><td class=head align=center><font size=-2><b>Force</b></font></td><td class=head><b>Type</b></td><td class=head><b>Server</b></td><td class=head align=right><b>GHash/s</b></td><td class=head align=right><b>%</b></td><td class=head align=right><font size=-1><b>Round Shares</b></font></td><td class=head align=right><b>Duration</b></td><td class=head><font size=-1><b>User Shares</b></font></td><td class=head><font size=-2><b>Rejection Rate (Total)</b></font></td><td class=head><b>Lagging</b></td><td class=head><b>Penalty</b></td><td class=head><b>+ P</b></td><td class=head><b>- P</b></td></tr>";
+
+					
+					var sortedKeys = [];
+					for(v in data["servers"]) {
+					    if (data["servers"][v]["role"]=="backup")
+					    {
+						    sortedKeys.push("1:" + v );
+						}
+					    else if (data["servers"][v]["cointype"]=="nmc")
+					    {
+						    sortedKeys.push("5:" + v );
+					    }
+					    else
+					    {
+						    if (data["servers"][v]["role"]=="disable")
+						    {
+							    sortedKeys.push("3:" + v );
+						    }
+						    else
+						    {
+						    	sortedKeys.push("2:" + v );
+						    }
+					    }
+					}
+					sortedKeys.sort();
+					
+					for(i in sortedKeys) {
+					    var v = sortedKeys[i].split(":")[1];
+						h += "<tr>";
+						var srv = data["servers"][v]
+						
+						var disabled = (srv["role"] == "disable");
+						
+						var spanColor = "<span style='color:white;'>"
+						
+						var urlToDisable = "/current/index/cmd/" + v + "/disable";
+						var urlToEnable = "/current/index/cmd/" + v + "/enable";
+						
+						if (disabled) {
+						    h += "<td align=center><input type='button' name='pbutton' value='x' onclick='location.href=\""+urlToEnable+"\"';></td>";
+						    spanColor = "<span style='color:DarkGray;'>"
+						}
+						else {
+						    if(srv["role"] == "backup") {
+						        h += "<td align=center>&nbsp;</td>";
+						    }
+						    else {
+						        h += "<td align=center><input type='button' name='pbutton' value='o' onclick='location.href=\""+urlToDisable+"\"';></td>";
+						    }
+						}
+						
+						var urlToForce = "/current/index/cmd/" + v + "/force";
+						h += "<td align=center>";
+						if (srv["forced"] == '0')
+						{
+							if(srv["role"] != "disable")
+							{
+								h += "<input type='button' name='pbutton' value='F' onclick='location.href=\""+urlToForce+"\"';>";
+							}
+							else { h += "&nbsp;"; }
+						}
+						else
+						{
+							h += "<input type='button' name='pbutton' value='+' onclick='location.href=\""+urlToForce+"\"';>";
+							h += "<span style='color:LightGreen;'><b>" + srv["forced"] + "</b></span>"
+						}
+						h += "</td>";
+						
+						
+						h += "<td align=right>" + srv["cointype"] + "</td>";
+						
+						var na  = v;
+						if(na == data["current"]) {
+						    spanColor = "<span style='color:yellow;'>"
+						}
+						if(srv["lag"]) {
+						    spanColor = "<span style='color:red;'>"
+						}
+						
+						na = spanColor + v + "</span>";
+						
+						var sh = parseInt(srv["shares"]);
+						
+						h += "<td><b>" + na + "</b></td>"
+						
+						if (disabled || srv["role"] == "backup") {
+							h += "<td align=right>&nbsp;</td>"
+						}
+						else {
+							if (parseInt(srv["ghash"]) == 0) {
+								h += "<td align=right>N/A</td>";
+							}
+							else {
+								h += "<td align=right>" + Math.round(parseFloat(srv["ghash"])*10)/10 + " GH</td>";
+							}
+						}
+						
+						if(srv["role"] == "backup" || disabled ) {
+							sh = "&nbsp;";
+							h += "<td align=right> &nbsp; </td>"
+						}
+						else {
+						    if ( srv["cointype"] == "btc" ){
+							    h += "<td align=right>" + parseInt((parseFloat(srv["shares"]) / data["btc_difficulty"]) * 100) + "%</td>"
+							}
+							else if ( srv["cointype"] == "nmc" ){
+								h += "<td align=right>" + parseInt((parseFloat(srv["shares"]) / data["nmc_difficulty"]) * 100) + "%</td>"
+							}
+						}
+
+						h += "<td align=right>" + sh + "</td>";
+						
+						var totalSec = parseInt(srv["duration"]);
+						
+						if (totalSec == 0) {
+						    h += "<td align=right>&nbsp;</td>";
+						}
+						else if (totalSec < 0) {
+						    h += "<td align=right>N/A</td>";
+						}
+						else {
+						    var days =    Math.floor(  totalSec / 86400 );
+						    var hours =   Math.floor( (totalSec - (days*86400)) / 3600 );
+						    var minutes = Math.floor( (totalSec - (days*86400) - (hours * 3600))/60);
+
+						    var estimationColor = "<span style='color:White;'>"
+						    if (srv["isDurationEstimated"] == true ) {
+						        estimationColor = "<span style='color:DarkGray;'>"
+						    }
+						    if (days>0) {
+						        h += "<td align=right><font=-2>" + estimationColor + days + "d:" + hours +"h:" + minutes + "m</span></font></td>";
+						    }
+						    else {
+						        h += "<td align=right>" + estimationColor + hours +"h:" + minutes + "m</span></td>";
+						    }
+						}
+						
+						var userShare = parseInt(srv["my_round_share"]);
+						
+						if(disabled) {
+							h += "<td align=right> &nbsp; </td>"
+						}
+						else {
+							h += "<td align=right>" + userShare + "</td>";
+						}
+						
+						lag = srv["lag"]
+						if(srv["lag"]) {
+							lag = "<b>LAGGING</b>";
+						} else {
+							lag = "&nbsp;";
+						}
+						
+						if(disabled) {
+							h += "<td align=right> &nbsp; </td>"
+						}
+						else{
+							var rej = parseInt(srv["reject"]);
+							var total = parseInt(srv["accept"]) + rej;
+							var rRate = 0.0;
+							if (total > 0) {
+							    rRate = 100.0 * rej / total
+							}
+							h += "<td align=right>" + Math.round(rRate*100)/100 + "% (" + total + ")</td>";
+						}
+						
+						h += "<td>" + lag + "</td>";
+						
+						if(disabled) {
+							h += "<td align=center> &nbsp; </td>"
+						}
+						else {
+							h += "<td align=center>" + Math.round(parseFloat((srv["penalty"]))*100)/100 + "</td>";
+						}
+						
+						if(disabled) {
+							h += "<td align=center> &nbsp; </td>"
+							h += "<td align=center> &nbsp; </td>"
+						}
+						else {
+							var urlToIncPenalty = "/current/index/cmd/" + v + "/IncPenalty";
+							var urlToDecPenalty = "/current/index/cmd/" + v + "/DecPenalty";
+							
+							h += "<td align=center><input type='button' name='pbutton' value='+' onclick='location.href=\""+urlToIncPenalty+"\"';></td>";
+							h += "<td align=center><input type='button' name='pbutton' value='-' onclick='location.href=\""+urlToDecPenalty+"\"';></td>";
+						}
+						
+						h += "</tr>";
+					}
+					h += "</table>";
+					$("#table").html(h);
+				});
+			}
+		
+			$(document).ready(function() {
+				setInterval("update()", 9500);
+				update();
+			});
+		</script>
+	</head>
+	<body>
+	
+		<h1 id="current"></h1>
+		
+		<div id="table"></div>
+	
+	</body>
+</html>
