@@ -296,14 +296,17 @@ class Pool():
         self.UpdateShares('bclc',round_shares, True)
    
     def polmine_sharesResponse(self, response):
-        output = re.search(r"stkich: &nbsp; </b> <br/>([ 0-9]+)<br/>", response)
+        #output = re.search(r"stkich: &nbsp; </b> <br/>([ 0-9]+)<br/>", response)
+        output_duration = re.search(r"&nbsp; </b> <br/> (\d+) dni (\d+) godzin (\d+) minut (\d+) sekund", response)
         output_speed = re.search(r"kopalni to<b>([ 0-9\.]+)</b>", response)
-        if output != None and output_speed != None:
-            round_shares = int(output.group(1).replace(' ',''))
+        if output_speed != None and output_duration != None:
+            duration = int(output_duration.group(1)) * 24 * 3600 + int(output_duration.group(2)) * 3600 + int(output_duration.group(3)) * 60 + int(output_duration.group(4))
             speed = float(output_speed.group(1))
             server = self.servers['polmine']
+            round_shares = speed * duration * 0.25
             server['ghash'] = speed
-            self.UpdateShares('polmine',round_shares)
+            server['duration'] = duration
+            self.UpdateShares('polmine',round_shares, True)
         else:
             self.bitHopper.log_msg('regex fail : polmine')
 
