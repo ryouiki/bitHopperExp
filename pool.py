@@ -76,6 +76,10 @@ class Pool():
                 'swepool':{ 'name': 'swepool.net', 
                     'mine_address': 'swepool.net:8337', 'user': swepool_user, 'pass': swepool_pass,
                     'api_address':'http://swepool.net/json?key=' + swepool_user_apikey   },
+                'btcmp':{ 'name': 'btcmp.com', 
+                    'mine_address': 'rr.btcmp.com:8332', 'user': btcmp_user, 'pass': btcmp_pass,
+                    'api_address':'http://www.btcmp.com/methods/pool/pool_get_stats' },
+                
                 'bitclockers':{ 'name': 'bitclockers.com',  # not stable
                     'mine_address': 'pool.bitclockers.com:8332', 'user': bitclockers_user, 'pass': bitclockers_pass,
                     'api_address':'https://bitclockers.com/api',
@@ -503,6 +507,13 @@ class Pool():
         else:
             self.bitHopper.log_msg('regex fail : digbtc')
 
+    def btcmp_sharesResponse(self, response):
+        info = json.loads(response)
+        round_shares = int(info['round_shares'])
+        server = self.servers['btcmp']
+        server['ghash'] = float(info['shares_per_second'])
+        self.UpdateShares('btcmp',round_shares)
+
     def errsharesResponse(self, error, args):
         self.bitHopper.log_msg('Error in pool api for ' + str(args) + str(error))
         self.bitHopper.log_dbg(str(error))
@@ -522,7 +533,12 @@ class Pool():
         for server in self.servers:
             info = self.servers[server]
             update = ['info','mine']
-            if info['role'] in update:
+            if server=='btcmp':
+                d = work.get_btcmp(self.bitHopper.json_agent,info['api_address'])
+                d.addCallback(self.selectsharesResponse, (server))
+                d.addErrback(self.errsharesResponse, (server))
+                d.addErrback(self.bitHopper.log_msg)
+            elif info['role'] in update:
                 d = work.get(self.bitHopper.json_agent,info['api_address'])
                 d.addCallback(self.selectsharesResponse, (server))
                 d.addErrback(self.errsharesResponse, (server))

@@ -66,8 +66,18 @@ def jsonrpc_lpcall(agent,server, url, update):
 
 @defer.inlineCallbacks
 def get(agent,url):
-    header = {'User-Agent': ['bitHopper'],'Content-Type': ['application/x-www-form-urlencoded'] }
+    header = {'User-Agent': ['Opera/9.02 (Windows NT 5.1; U; en)'],'Content-Type': ['application/x-www-form-urlencoded'] }
     d = agent.request('GET', url, Headers(header), None)
+    response = yield d
+    finish = Deferred()
+    response.deliverBody(WorkProtocol(finish))
+    body = yield finish
+    defer.returnValue(body)
+
+@defer.inlineCallbacks
+def get_btcmp(agent, url):
+    header = {'User-Agent': ['Opera/9.02 (Windows NT 5.1; U; en)'],'Content-Type': ['application/x-www-form-urlencoded'], 'Cookie': ['session_id=1234'] }
+    d = agent.request('POST', url, Headers(header), StringProducer('_token=1234'))
     response = yield d
     finish = Deferred()
     response.deliverBody(WorkProtocol(finish))
