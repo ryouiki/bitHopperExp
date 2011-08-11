@@ -199,7 +199,7 @@ class Pool():
         info = self.servers[server]
         if duration_forced == True:
             info['isDurationEstimated'] = False
-            if info['duration'] * info['ghash'] * 0.25 * 0.2 > shares:
+            if info['duration'] * info['ghash'] * 0.25 * 0.1 > shares:
                 # checks fake / suspicious small share (poolmunity does it)
                 self.bitHopper.log_msg( 'Fake Share > {0} : {1} | {2} min : {3} GH'.format(server, shares, int(info['duration'])/60, float(info['ghash']) ) )
                 shares = 10**10
