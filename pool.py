@@ -6,6 +6,7 @@ import work
 import json
 import re
 import time
+import calendar
 import database
 
 from password import *
@@ -511,8 +512,10 @@ class Pool():
         info = json.loads(response)
         round_shares = int(info['round_shares'])
         server = self.servers['btcmp']
-        server['ghash'] = float(info['shares_per_second'])
-        self.UpdateShares('btcmp',round_shares)
+        server['ghash'] = float(info['shares_per_second'])*4
+        time_string = info['round_start'].split('.')[0]
+        server['duration'] = time.time() - calendar.timegm(time.strptime(time_string, "%Y-%m-%dT%H:%M:%S")) + 7200
+        self.UpdateShares('btcmp',round_shares, True)
 
     def errsharesResponse(self, error, args):
         self.bitHopper.log_msg('Error in pool api for ' + str(args) + str(error))
