@@ -23,9 +23,6 @@ class Pool():
                 'deepbit':{ 'name':'deepbit.net', 
                     'mine_address':'pit.deepbit.net:8332', 'user':deepbit_user, 'pass':deepbit_pass, 
                     'api_address':'http://deepbit.net/api/' + deepbit_apikey, 'penalty':3 },
-                'slush':{ 'name':'bitcoin.cz', 
-                    'mine_address':'api2.bitcoin.cz:8332', 'user':slush_user, 'pass':slush_pass, 
-                    'api_address':'http://mining.bitcoin.cz/stats/json/', 'paytype':'score' },
                 'bitparking':{'shares':nmc_difficulty*.431, 'name':'BitParking',   # namecoin pool
                     'mine_address':'bitparking.com:9098', 'user':nmc_user, 'pass':nmc_pass,
                     'api_address':'http://bitparking.com/pool',
@@ -54,7 +51,7 @@ class Pool():
                 'mtred':{ 'name':'mtred',  
                     'mine_address':'mtred.com:8837', 'user':mtred_user, 'pass':mtred_pass,
                     'api_address':'https://mtred.com/api/user/key/' + mtred_user_apikey, 
-                    'user_api_address':'https://mtred.com/api/user/key/' + mtred_user_apikey, 'penalty':1.05 },
+                    'user_api_address':'https://mtred.com/api/user/key/' + mtred_user_apikey, 'wait':0.02, 'penalty':1.02 },
                 'ozco':{ 'name': 'ozco.in',
                    'mine_address': 'ozco.in:8332', 'user': ozco_user, 'pass': ozco_pass,
                    'api_address':'https://ozco.in/api.php' },
@@ -64,45 +61,12 @@ class Pool():
                 'btcmonkey':{ 'name': 'bitcoinmonkey.com',
                     'mine_address': 'bitcoinmonkey.com:8332', 'user': btcmonkey_user, 'pass': btcmonkey_pass,
                     'api_address':'https://bitcoinmonkey.com/json/api.php' },
-                'unitedminers':{ 'name': 'unitedminers.com', # now PPLNS
-                    'mine_address': 'pool.unitedminers.com:8332', 'user': unitedminers_user, 'pass': unitedminers_pass,
-                    'api_address':'http://www.unitedminers.com/?action=api', 'paytype':'pplns', 'role':'disable' },
                 'btcserv':{ 'name': 'btcserv.net',
                     'mine_address': 'btcserv.net:8335', 'user': btcserv_user, 'pass': btcserv_pass,
                     'api_address':'http://btcserv.net/' },
-                'bitclockers':{ 'name': 'bitclockers.com',
-                    'mine_address': 'pool.bitclockers.com:8332', 'user': bitclockers_user, 'pass': bitclockers_pass,
-                    'api_address':'https://bitclockers.com/api',
-                    'user_api_address':'https://bitclockers.com/api/'+bitclockers_user_apikey, 'role':'disable' },
                 'btcg':{ 'name':'BTC Guild',  
                     'mine_address':'us.btcguild.com:8332', 'user':btcguild_user, 'pass':btcguild_pass, 'penalty':4,
                     'api_address':'https://www.btcguild.com/'},
-                'eligius':{'shares':btc_difficulty*.431, 'name':'eligius', #SMPPS, backup pool
-                    'mine_address':'su.mining.eligius.st:8337', 'user':eligius_address, 'pass':'x', 'penalty':3,
-                    'paytype':'smpps', 'role':'backup'},
-                'arsbitcoin':{'shares':btc_difficulty*.431, 'name':'arsbitcoin', #SMPPS, backup pool
-                    'mine_address':'arsbitcoin.com:8344', 'user':ars_user, 'pass':ars_pass, 'penalty':2,
-                    'paytype':'smpps', 'role':'backup'},
-                'bitp':{ 'name': 'bitp.it', # SMPPS, backup pool
-                    'mine_address': 'pool.bitp.it:8334', 'user': bitp_user, 'pass': bitp_pass,
-                    'api_address':'https://pool.bitp.it/leaderboard',
-                    'user_api_address':'https://pool.bitp.it/api/user?token=' + bitp_user_apikey,
-                    'paytype':'smpps', 'role':'backup'},
-                'eclipsemc':{ 'name': 'eclipsemc.com', # scoring system
-                    'mine_address': 'pacrim.eclipsemc.com:8337', 'user': eclipsemc_user, 'pass': eclipsemc_pass, 'paytype':'score', 'role':'disable',
-                    'api_address':'https://eclipsemc.com/api.php?key='+ eclipsemc_apikey +'&action=poolstats' },
-                'miningmainframe':{ 'name': 'mining.mainframe.nl', # scoring system
-                    'mine_address': 'mining.mainframe.nl:8343', 'user': miningmainframe_user, 'pass': miningmainframe_pass,
-                    'api_address':'http://mining.mainframe.nl/api', 'paytype':'score', 'role':'disable'},
-                'mineco':{ 'name': 'mineco.in',  # now PPLNS
-                    'mine_address': 'mineco.in:3000', 'user': mineco_user, 'pass': mineco_pass,
-                    'api_address':'https://mineco.in/stats.json', 'paytype':'pplns' },
-                'x8s':{ 'name': 'btc.x8s.de', # closed
-                    'mine_address': 'pit.x8s.de:8337', 'user': x8s_user, 'pass': x8s_pass,
-                    'api_address':'http://btc.x8s.de/api/global.json', 'paytype':'pplns', 'role':'removefromlist'},
-                'bmunion':{ 'name': 'bitminersunion', 
-                    'mine_address': 'pool.bitminersunion.org:8341', 'user': bmu_user, 'pass': bmu_pass,
-                    'api_address':'http://67.249.146.78/stats.php'},
                 'pool24':{ 'name': 'btcpool24.com', 
                     'mine_address': 'min.btcpool24.com:8338', 'user': pool24_user, 'pass': pool24_pass,
                     'api_address':'http://www.btcpool24.com/json_stats.php'},
@@ -112,16 +76,61 @@ class Pool():
                 'bithasher':{ 'name': 'bithasher.com', 
                     'mine_address': 'bithasher.com:8332', 'user': bithasher_user, 'pass': bithasher_pass,
                     'api_address':'http://bithasher.com'},
-                'digbtc':{ 'name': 'http://digbtc.net/', 
+                'bitclockers':{ 'name': 'bitclockers.com',  # not stable
+                    'mine_address': 'pool.bitclockers.com:8332', 'user': bitclockers_user, 'pass': bitclockers_pass,
+                    'api_address':'https://bitclockers.com/api',
+                    'user_api_address':'https://bitclockers.com/api/'+bitclockers_user_apikey, 'role':'disable' },
+                'bmunion':{ 'name': 'bitminersunion',       # not stable 
+                    'mine_address': 'pool.bitminersunion.org:8341', 'user': bmu_user, 'pass': bmu_pass,
+                    'api_address':'http://67.249.146.78/stats.php', 'role':'disable'},
+                'digbtc':{ 'name': 'http://digbtc.net/',    # not stable
                     'mine_address': '96.126.111.65:8332', 'user': digbtc_user, 'pass': digbtc_pass,
-                    'api_address':'http://digbtc.net/'},
-                'itzod':{ 'name': 'http://pool.itzod.ru', # scoring system
+                    'api_address':'http://digbtc.net/', 'role':'disable'},
+                'eligius':{'shares':btc_difficulty*.431, 'name':'eligius',       # SMPPS, backup pool
+                    'mine_address':'su.mining.eligius.st:8337', 'user':eligius_address, 'pass':'x', 'penalty':3,
+                    'paytype':'smpps', 'role':'backup'},
+                'arsbitcoin':{'shares':btc_difficulty*.431, 'name':'arsbitcoin', #SMPPS, backup pool
+                    'mine_address':'arsbitcoin.com:8344', 'user':ars_user, 'pass':ars_pass, 'penalty':2,
+                    'paytype':'smpps', 'role':'backup'},
+                'bitp':{ 'name': 'bitp.it',                                      # SMPPS, backup pool
+                    'mine_address': 'pool.bitp.it:8334', 'user': bitp_user, 'pass': bitp_pass,
+                    'api_address':'https://pool.bitp.it/leaderboard',
+                    'user_api_address':'https://pool.bitp.it/api/user?token=' + bitp_user_apikey,
+                    'paytype':'smpps', 'role':'backup'},
+                        
+                # hopping PPLNS or scoring(slush) pools are not recommended
+                # in simulations,
+                # with existing 9 proportional pools, adding one PPLNS or scoring pool enhances only 0 ~ 2% total efficiency at best
+                # classic < 0.1 mining also harms 1% total eff (normal hopping would harm 4% damage) 
+                # while adding one more proportional pool enhances ~7% total eff gain
+                # try at your own risk ;)
+                
+                'slush':{ 'name':'bitcoin.cz',   # scoring 
+                    'mine_address':'api2.bitcoin.cz:8332', 'user':slush_user, 'pass':slush_pass, 
+                    'api_address':'http://mining.bitcoin.cz/stats/json/', 'paytype':'score', 'role':'disable' },
+                'mineco':{ 'name': 'mineco.in',  # PPLNS
+                    'mine_address': 'mineco.in:3000', 'user': mineco_user, 'pass': mineco_pass,
+                    'api_address':'https://mineco.in/stats.json', 'paytype':'pplns', 'role':'disable' },
+                        
+                'unitedminers':{ 'name': 'unitedminers.com', # PPLNS
+                    'mine_address': 'pool.unitedminers.com:8332', 'user': unitedminers_user, 'pass': unitedminers_pass,
+                    'api_address':'http://www.unitedminers.com/?action=api', 'paytype':'pplns', 'role':'removefromlist' },
+                'eclipsemc':{ 'name': 'eclipsemc.com', # scoring system not test yet
+                    'mine_address': 'pacrim.eclipsemc.com:8337', 'user': eclipsemc_user, 'pass': eclipsemc_pass, 'paytype':'score', 'role':'removefromlist',
+                    'api_address':'https://eclipsemc.com/api.php?key='+ eclipsemc_apikey +'&action=poolstats' },
+                'miningmainframe':{ 'name': 'mining.mainframe.nl', # scoring system not test yet
+                    'mine_address': 'mining.mainframe.nl:8343', 'user': miningmainframe_user, 'pass': miningmainframe_pass,
+                    'api_address':'http://mining.mainframe.nl/api', 'paytype':'score', 'role':'removefromlist'},                
+                'itzod':{ 'name': 'http://pool.itzod.ru', # scoring system not test yet
                     'mine_address': 'lp1.itzod.ru:8344', 'user': itzod_user, 'pass': itzod_pass,
-                    'api_address':'http://pool.itzod.ru/api.php', 'paytype':'score', 'role':'disable'},
+                    'api_address':'http://pool.itzod.ru/api.php', 'paytype':'score', 'role':'removefromlist'},
+                'x8s':{ 'name': 'btc.x8s.de', # closed
+                    'mine_address': 'pit.x8s.de:8337', 'user': x8s_user, 'pass': x8s_pass,
+                    'api_address':'http://btc.x8s.de/api/global.json', 'paytype':'pplns', 'role':'removefromlist'},
                 }
 
         serverTemplate = { 'shares': default_shares, 
-            'penalty':1.0, 'lag':False, 'LP':None, 'accept':0, 'reject':0, 'forced':0,
+            'wait':0.0, 'penalty':1.0, 'lag':False, 'LP':None, 'accept':0, 'reject':0, 'forced':0,
             'role':'mine', 'paytype':'prop', 'cointype':'btc', 'my_round_share':0, 'duration':0, 'isDurationEstimated':True, 'duration_temporal':0, 'duration_share':0, 'ghash':0 }
 
         for server in self.servers:
@@ -134,8 +143,17 @@ class Pool():
         for server in self.servers.keys():
             if self.servers[server]['role'] == 'removefromlist':
                 del self.servers[server]
+                continue
             elif self.servers[server]['role'] == 'backup':
                 self.current_server = server
+            if self.servers[server]['paytype'] == 'pplns':    # not analytically proven. but chosen near-optimal value from simulations
+                if self.servers[server]['wait'] == 0:         # this configuration would be safer than conventional <0.1 mining
+                    self.servers[server]['wait'] = 0.33
+                    self.servers[server]['penalty'] = 1.5
+            elif self.servers[server]['paytype'] == 'score':  # not analytically proven. but chosen near-optimal value from simulations
+                if self.servers[server]['wait'] == 0:         # this configuration would be safer than conventional <0.1 mining
+                    self.servers[server]['wait'] = 0.32
+                    self.servers[server]['penalty'] = 1.2
 
         self.updateInterval = 57
 

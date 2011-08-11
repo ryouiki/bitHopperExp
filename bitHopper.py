@@ -96,7 +96,7 @@ class BitHopper():
     def get_progress(self, server):
         type_diff = { 'btc':self.difficulty.get_btc_difficulty(), 'nmc':self.difficulty.get_nmc_difficulty() }
         info = self.pool.get_entry(server)
-        return info['shares'] * info['penalty'] / type_diff[info['cointype']]
+        return info['wait'] + info['shares'] * info['penalty'] / type_diff[info['cointype']]
 
     def select_best_server(self, ):
         """selects the best server for pool hopping. If there is not good server it returns SMPPS pool"""
@@ -111,28 +111,12 @@ class BitHopper():
                 server_name = server
                 break
 
-        # back to minimum round share based selection, until convinced to new algorithms
-        
+        # minimum round share based selection is the BEST
+        # prop and PPLNS and score pools are unified with 'wait' and 'penalty' factor 
         if server_name == None:
             for server in self.pool.get_servers():
                 info = self.pool.get_entry(server)
-                if info['role'] != 'mine' or info['lag'] == True or info['paytype'] != 'prop':
-                    continue
-                share_progress = self.get_progress(server)
-                if share_progress < min_progress:
-                    min_progress = share_progress
-                    server_name = server
-        
-        # for score / pplns pools
-        # they should always be checked after prop. pools because their efficiency is always lower than prop. pools
-        # mining only 1/3 of default threshold(0.43 / 3 ) for prop. pools
-        if server_name == None:
-            min_progress = threshold * 0.25
-            for server in self.pool.get_servers():
-                info = self.pool.get_entry(server)
-                if info['role'] == 'disable' or info['lag'] == True:
-                    continue
-                if info['paytype'] != 'score' and info['paytype'] != 'pplns':
+                if info['role'] != 'mine' or info['lag'] == True:
                     continue
                 share_progress = self.get_progress(server)
                 if share_progress < min_progress:
@@ -157,7 +141,7 @@ class BitHopper():
             min_progress = threshold
             for server in self.pool.get_servers():
                 info = self.pool.get_entry(server)
-                if info['role'] != 'mine' or info['paytype'] != 'prop':
+                if info['role'] != 'mine':
                     continue
                 share_progress = self.get_progress(server)
                 if share_progress < min_progress:
