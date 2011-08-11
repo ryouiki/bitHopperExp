@@ -73,6 +73,9 @@ class Pool():
                 'bithasher':{ 'name': 'bithasher.com', 
                     'mine_address': 'bithasher.com:8332', 'user': bithasher_user, 'pass': bithasher_pass,
                     'api_address':'http://bithasher.com'},
+                'swepool':{ 'name': 'swepool.net', 
+                    'mine_address': 'swepool.net:8337', 'user': swepool_user, 'pass': swepool_pass,
+                    'api_address':'http://swepool.net/json?key=' + swepool_user_apikey   },
                 'bitclockers':{ 'name': 'bitclockers.com',  # not stable
                     'mine_address': 'pool.bitclockers.com:8332', 'user': bitclockers_user, 'pass': bitclockers_pass,
                     'api_address':'https://bitclockers.com/api',
@@ -379,6 +382,14 @@ class Pool():
         server = self.servers['mtred']
         server['ghash'] = float(info['server']['hashrate'])
         self.UpdateShares('mtred',round_shares)
+
+    def swepool_sharesResponse(self, response):
+        info = json.loads(response)
+        round_shares = int(info['round_shares'])
+        server = self.servers['swepool']
+        server['ghash'] = float(info['pool_speed'])/1000000000.0
+        server['duration'] = int(info['round_time'])
+        self.UpdateShares('swepool',round_shares)
 
     def mineco_sharesResponse(self, response):
         info = json.loads(response)
