@@ -40,9 +40,6 @@ class Pool():
                 'triple':{ 'name':'triplemining.com', 
                     'mine_address':'eu.triplemining.com:8344', 'user':triple_user, 'pass':triple_pass, 
                     'api_address':'http://api.triplemining.com/json/stats' },
-                'poolmunity':{ 'name':'poolmunity.com', 
-                    'mine_address':'poolmunity.com:8332', 'user':poolmunity_user, 'pass':poolmunity_pass, 
-                    'api_address':'https://poolmunity.com/api.php?server' },
                 'nofee':{ 'name': 'nofee',
                     'mine_address': 'nofeemining.com:8332', 'user': nofee_user,
                     'pass': nofee_pass, 
@@ -124,6 +121,9 @@ class Pool():
                 'itzod':{ 'name': 'http://pool.itzod.ru', # scoring system not test yet
                     'mine_address': 'lp1.itzod.ru:8344', 'user': itzod_user, 'pass': itzod_pass,
                     'api_address':'http://pool.itzod.ru/api.php', 'paytype':'score', 'role':'removefromlist'},
+                'poolmunity':{ 'name':'poolmunity.com',   # scoring system not test yet
+                    'mine_address':'poolmunity.com:8332', 'user':poolmunity_user, 'pass':poolmunity_pass, 
+                    'api_address':'https://poolmunity.com/api.php?server', 'role':'removefromlist' },
                 'x8s':{ 'name': 'btc.x8s.de', # closed
                     'mine_address': 'pit.x8s.de:8337', 'user': x8s_user, 'pass': x8s_pass,
                     'api_address':'http://btc.x8s.de/api/global.json', 'paytype':'pplns', 'role':'removefromlist'},
