@@ -389,7 +389,7 @@ class Pool():
         server = self.servers['swepool']
         server['ghash'] = float(info['pool_speed'])/1000000000.0
         server['duration'] = int(info['round_time'])
-        self.UpdateShares('swepool',round_shares)
+        self.UpdateShares('swepool',round_shares, True)
 
     def mineco_sharesResponse(self, response):
         info = json.loads(response)
