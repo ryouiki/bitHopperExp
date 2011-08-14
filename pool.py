@@ -54,7 +54,7 @@ class Pool():
                    'mine_address': 'ozco.in:8332', 'user': ozco_user, 'pass': ozco_pass,
                    'api_address':'https://ozco.in/api.php' },
                 'rfc':{ 'name': 'rfcpool.com',
-                    'mine_address': 'pool.rfcpool.com:8332', 'user': rfc_user, 'pass': 'x',
+                    'mine_address': 'pool.rfcpool.com:8332', 'user': rfc_user, 'pass': 'x', 'role':'removefromlist',
                     'api_address':'https://www.rfcpool.com/api/pool/stats' },
                 'btcmonkey':{ 'name': 'bitcoinmonkey.com',
                     'mine_address': 'bitcoinmonkey.com:8332', 'user': btcmonkey_user, 'pass': btcmonkey_pass,
@@ -68,8 +68,8 @@ class Pool():
                 'pool24':{ 'name': 'btcpool24.com', 
                     'mine_address': 'min.btcpool24.com:8338', 'user': pool24_user, 'pass': pool24_pass,
                     'api_address':'http://www.btcpool24.com/json_stats.php'},
-                'bcpool':{ 'name': 'bitcoinpool.com', 
-                    'mine_address': 'bitcoinpool.com:8334', 'user': bcpool_user, 'pass': bcpool_pass,
+                'bcpool':{ 'name': 'bitcoinpool.com',    # to be worked to detect fake
+                    'mine_address': 'bitcoinpool.com:8334', 'user': bcpool_user, 'pass': bcpool_pass, 'role':'disable',
                     'api_address':'http://www.bitcoinpool.com/pooljson.php'},
                 'bithasher':{ 'name': 'bithasher.com', 
                     'mine_address': 'bithasher.com:8332', 'user': bithasher_user, 'pass': bithasher_pass,
@@ -77,8 +77,8 @@ class Pool():
                 'swepool':{ 'name': 'swepool.net', 
                     'mine_address': 'swepool.net:8337', 'user': swepool_user, 'pass': swepool_pass,
                     'api_address':'http://swepool.net/json?key=' + swepool_user_apikey   },
-                'btcmp':{ 'name': 'btcmp.com', 
-                    'mine_address': 'rr.btcmp.com:8332', 'user': btcmp_user, 'pass': btcmp_pass,
+                'btcmp':{ 'name': 'btcmp.com', # to be fixed
+                    'mine_address': 'rr.btcmp.com:8332', 'user': btcmp_user, 'pass': btcmp_pass, 'role':'disable',
                     'api_address':'http://www.btcmp.com/methods/pool/pool_get_stats' },
                 
                 'bitclockers':{ 'name': 'bitclockers.com',  # not stable
