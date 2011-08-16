@@ -34,7 +34,7 @@ class Pool():
                     'mine_address':'eu.triplemining.com:8344', 'user':triple_user, 'pass':triple_pass, 
                     'api_address':'http://api.triplemining.com/json/stats' },
                 'mtred':{ 'name':'mtred',  
-                    'mine_address':'mtred.com:8837', 'user':mtred_user, 'pass':mtred_pass,
+                    'mine_address':'mtred.com:8337', 'user':mtred_user, 'pass':mtred_pass,
                     'api_address':'https://mtred.com/api/user/key/' + mtred_user_apikey, 
                     'user_api_address':'https://mtred.com/api/user/key/' + mtred_user_apikey, 'wait':0.02, 'penalty':1.02 },
                 'ozco':{ 'name': 'ozco.in',
