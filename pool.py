@@ -24,14 +24,6 @@ class Pool():
                 'deepbit':{ 'name':'deepbit.net', 
                     'mine_address':'pit.deepbit.net:8332', 'user':deepbit_user, 'pass':deepbit_pass, 
                     'api_address':'http://deepbit.net/api/' + deepbit_apikey, 'penalty':3 },
-                'bitparking':{'shares':nmc_difficulty*.431, 'name':'BitParking',   # namecoin pool
-                    'mine_address':'bitparking.com:9098', 'user':nmc_user, 'pass':nmc_pass,
-                    'api_address':'http://bitparking.com/pool',
-                    'cointype':'nmc', 'role':'disable', 'penalty':2},
-                'namebit':{'shares':nmc_difficulty, 'name':'NameBit',   # namecoin pool
-                    'mine_address':'pool.namebit.org:10000', 'user':namebit_user, 'pass':namebit_pass,
-                    'api_address':'http://namebit.org/',
-                    'cointype':'nmc', 'role':'disable', 'penalty':2},
                 'bclc':{ 'name':'bitcoins.lc', 
                     'mine_address':'bitcoins.lc:8080', 'user':bclc_user, 'pass':bclc_pass, 
                     'api_address':'https://www.bitcoins.lc/stats.json', 'penalty':1.05 },
@@ -41,11 +33,6 @@ class Pool():
                 'triple':{ 'name':'triplemining.com', 
                     'mine_address':'eu.triplemining.com:8344', 'user':triple_user, 'pass':triple_pass, 
                     'api_address':'http://api.triplemining.com/json/stats' },
-                'nofee':{ 'name': 'nofee',
-                    'mine_address': 'nofeemining.com:8332', 'user': nofee_user,
-                    'pass': nofee_pass, 
-                    'api_address':'http://www.nofeemining.com/api.php?key=' + nofee_user_apikey,
-                    'user_api_address':'http://www.nofeemining.com/api.php?key=' + nofee_user_apikey },
                 'mtred':{ 'name':'mtred',  
                     'mine_address':'mtred.com:8837', 'user':mtred_user, 'pass':mtred_pass,
                     'api_address':'https://mtred.com/api/user/key/' + mtred_user_apikey, 
@@ -53,9 +40,6 @@ class Pool():
                 'ozco':{ 'name': 'ozco.in',
                    'mine_address': 'ozco.in:8332', 'user': ozco_user, 'pass': ozco_pass,
                    'api_address':'https://ozco.in/api.php' },
-                'rfc':{ 'name': 'rfcpool.com',
-                    'mine_address': 'pool.rfcpool.com:8332', 'user': rfc_user, 'pass': 'x', 'role':'removefromlist',
-                    'api_address':'https://www.rfcpool.com/api/pool/stats' },
                 'btcmonkey':{ 'name': 'bitcoinmonkey.com',
                     'mine_address': 'bitcoinmonkey.com:8332', 'user': btcmonkey_user, 'pass': btcmonkey_pass,
                     'api_address':'https://bitcoinmonkey.com/json/api.php' },
@@ -68,19 +52,25 @@ class Pool():
                 'pool24':{ 'name': 'btcpool24.com', 
                     'mine_address': 'min.btcpool24.com:8338', 'user': pool24_user, 'pass': pool24_pass,
                     'api_address':'http://www.btcpool24.com/json_stats.php'},
-                'bcpool':{ 'name': 'bitcoinpool.com',    # to be worked to detect fake
-                    'mine_address': 'bitcoinpool.com:8334', 'user': bcpool_user, 'pass': bcpool_pass, 'role':'disable',
-                    'api_address':'http://www.bitcoinpool.com/pooljson.php'},
+                'bcpool':{ 'name': 'bitcoinpool.com',    # be careful. they fake json stats
+                    'mine_address': 'bitcoinpool.com:8334', 'user': bcpool_user, 'pass': bcpool_pass,
+                    'api_address':'http://www.bitcoinpool.com/'},
                 'bithasher':{ 'name': 'bithasher.com', 
                     'mine_address': 'bithasher.com:8332', 'user': bithasher_user, 'pass': bithasher_pass,
                     'api_address':'http://bithasher.com'},
                 'swepool':{ 'name': 'swepool.net', 
                     'mine_address': 'swepool.net:8337', 'user': swepool_user, 'pass': swepool_pass,
                     'api_address':'http://swepool.net/json?key=' + swepool_user_apikey   },
-                'btcmp':{ 'name': 'btcmp.com', # to be fixed
-                    'mine_address': 'rr.btcmp.com:8332', 'user': btcmp_user, 'pass': btcmp_pass, 'role':'disable',
+                'btcmp':{ 'name': 'btcmp.com',
+                    'mine_address': 'rr.btcmp.com:8332', 'user': btcmp_user, 'pass': btcmp_pass,
                     'api_address':'http://www.btcmp.com/methods/pool/pool_get_stats' },
-                
+                'nofee2':{ 'name': 'nofee2',                     # moved to new site
+                    'mine_address': 'nofeemining.appspot.com:80', 'user': nofee2_user, 'pass': nofee2_pass, 'role':'removefromlist',
+                    'api_address':'https://nofeemining.appspot.com/api.php' },
+                'digbtc':{ 'name': 'http://digbtc.net/',
+                    'mine_address': 'btc.digbtc.net:8332', 'user': digbtc_user, 'pass': digbtc_pass,
+                    'api_address':'http://digbtc.net/papi.php'},
+
                 'bitclockers':{ 'name': 'bitclockers.com',  # not stable
                     'mine_address': 'pool.bitclockers.com:8332', 'user': bitclockers_user, 'pass': bitclockers_pass,
                     'api_address':'https://bitclockers.com/api',
@@ -88,9 +78,7 @@ class Pool():
                 'bmunion':{ 'name': 'bitminersunion',       # not stable 
                     'mine_address': 'pool.bitminersunion.org:8341', 'user': bmu_user, 'pass': bmu_pass,
                     'api_address':'http://67.249.146.78/stats.php', 'role':'disable'},
-                'digbtc':{ 'name': 'http://digbtc.net/',    # not stable
-                    'mine_address': '96.126.111.65:8332', 'user': digbtc_user, 'pass': digbtc_pass,
-                    'api_address':'http://digbtc.net/', 'role':'disable'},
+
                 'eligius':{'shares':btc_difficulty*.431, 'name':'eligius',       # SMPPS, backup pool
                     'mine_address':'su.mining.eligius.st:8337', 'user':eligius_address, 'pass':'x', 'penalty':3,
                     'paytype':'smpps', 'role':'backup'},
@@ -102,7 +90,26 @@ class Pool():
                     'api_address':'https://pool.bitp.it/leaderboard',
                     'user_api_address':'https://pool.bitp.it/api/user?token=' + bitp_user_apikey,
                     'paytype':'smpps', 'role':'backup'},
-                        
+                
+                ####################################
+                # Namecoin pools
+                
+                'bitparking':{'shares':nmc_difficulty*.431, 'name':'BitParking',   # namecoin pool
+                    'mine_address':'bitparking.com:9098', 'user':nmc_user, 'pass':nmc_pass,
+                    'api_address':'http://bitparking.com/pool',
+                    'cointype':'nmc', 'role':'disable', 'penalty':2},
+                'namebit':{'shares':nmc_difficulty, 'name':'NameBit',   # namecoin pool
+                    'mine_address':'pool.namebit.org:10000', 'user':namebit_user, 'pass':namebit_pass,
+                    'api_address':'http://namebit.org/',
+                    'cointype':'nmc', 'role':'disable', 'penalty':2},
+
+                ####################################
+                # i0 pools : experimental. could only mine with forced mining
+                'i0guild':{'name':'i0guild',      # experimental i0 pool
+                    'mine_address':'i0.btcguild.com:8332', 'user':i0guild_user, 'pass':i0guild_pass,
+                    'api_address':'http://i0.btcguild.com/',
+                    'cointype':'btc', 'role':'disable', 'penalty':3},
+                
                 # hopping PPLNS or scoring(slush) pools are not recommended
                 # in simulations,
                 # with existing 9 proportional pools, adding one PPLNS or scoring pool enhances only 0 ~ 2% total efficiency at best
@@ -129,12 +136,15 @@ class Pool():
                 'itzod':{ 'name': 'http://pool.itzod.ru', # scoring system not test yet
                     'mine_address': 'lp1.itzod.ru:8344', 'user': itzod_user, 'pass': itzod_pass,
                     'api_address':'http://pool.itzod.ru/api.php', 'paytype':'score', 'role':'removefromlist'},
-                'poolmunity':{ 'name':'poolmunity.com',   # scoring system not test yet
+                'poolmunity':{ 'name':'poolmunity.com',   # closed
                     'mine_address':'poolmunity.com:8332', 'user':poolmunity_user, 'pass':poolmunity_pass, 
                     'api_address':'https://poolmunity.com/api.php?server', 'role':'removefromlist' },
                 'x8s':{ 'name': 'btc.x8s.de', # closed
                     'mine_address': 'pit.x8s.de:8337', 'user': x8s_user, 'pass': x8s_pass,
                     'api_address':'http://btc.x8s.de/api/global.json', 'paytype':'pplns', 'role':'removefromlist'},
+                'rfc':{ 'name': 'rfcpool.com',  # closed
+                    'mine_address': 'pool.rfcpool.com:8332', 'user': rfc_user, 'pass': 'x', 'role':'removefromlist',
+                    'api_address':'https://www.rfcpool.com/api/pool/stats' },
                 }
 
         serverTemplate = { 'shares': default_shares, 
@@ -266,6 +276,10 @@ class Pool():
         round_shares = self.bitHopper.difficulty.get_btc_difficulty()*0.431
         self.UpdateShares('deepbit',round_shares)
 
+    def i0guild_sharesResponse(self, response):
+        round_shares = self.bitHopper.difficulty.get_btc_difficulty()*0.431
+        self.UpdateShares('i0guild',round_shares)
+
     def slush_sharesResponse(self, response):
         info = json.loads(response)
         round_shares = int(info['shares'])
@@ -285,12 +299,12 @@ class Pool():
         server['duration'] = int(info['roundduration'])
         self.UpdateShares('ozco',round_shares, True)
 
-    def nofee_sharesResponse(self, response):
+    def nofee2_sharesResponse(self, response):
         info = json.loads(response)
         round_shares = int(info['poolRoundShares'])
-        server = self.servers['nofee']
+        server = self.servers['nofee2']
         server['ghash'] = float(info['poolspeed'])
-        self.UpdateShares('nofee',round_shares)
+        self.UpdateShares('nofee2',round_shares)
 
     def mmf_sharesResponse(self, response):
         info = json.loads(response)
@@ -335,6 +349,29 @@ class Pool():
             self.UpdateShares('polmine',round_shares, True)
         else:
             self.bitHopper.log_msg('regex fail : polmine')
+
+    def bcpool_sharesResponse(self, response):
+        output_duration = re.search(r'Round Duration: <d class=\"info\">(?:([0-9]+)d&nbsp;)?([0-9]+)h&nbsp;([0-9]+)m&nbsp;', response)
+        output_speed = re.search(r'Pool Speed: <d class=\"info\">([\.0-9]+) Gh', response)
+        if output_speed != None and output_duration != None:
+            day = 0
+            hour = 0
+            min = 0
+            if output_duration.group(1) != None:
+                day = int(output_duration.group(1))
+            if output_duration.group(2) != None:
+                hour = int(output_duration.group(2))
+            if output_duration.group(3) != None:
+                min = int(output_duration.group(3))
+            duration = day * 24 * 3600 + hour * 3600 + min * 60
+            speed = float(output_speed.group(1))
+            server = self.servers['bcpool']
+            round_shares = speed * duration * 0.25
+            server['ghash'] = speed
+            server['duration'] = duration
+            self.UpdateShares('bcpool',round_shares, True)
+        else:
+            self.bitHopper.log_msg('regex fail : bcpool')
 
     def rfc_sharesResponse(self, response):
         info = json.loads(response)
@@ -463,16 +500,7 @@ class Pool():
         server['ghash'] = float(info['hashrate']) / 1000.0
         server['duration'] = int(info['round_duration_sec'])
         self.UpdateShares('pool24',round_shares, True)
-        
-    def bcpool_sharesResponse(self, response):
-        info = json.loads(response)
-        round_shares = int(info['round_shares'])
-        server = self.servers['bcpool']
-        server['ghash'] = float(info['hashrate'])
-        durationStrings = info['round_duration'].split(':')
-        server['duration'] = int(durationStrings[0]) * 24 * 60 * 60 + int(durationStrings[1]) * 60 * 60 + int(durationStrings[2]) * 60 + int(durationStrings[3])
-        self.UpdateShares('bcpool',round_shares, True)
-        
+
     def itzod_sharesResponse(self, response):
         info = json.loads(response)
         round_shares = int(info['total_shares_count'])
@@ -496,17 +524,11 @@ class Pool():
             self.bitHopper.log_msg('regex fail : bithasher')
 
     def digbtc_sharesResponse(self, response):
-        shareMatch = re.search('Round Shares</td><td>([,0-9]+)<', response)
-        match = re.search('Hash: <b>([\.0-9]+)GH/s</b> Round Shares: <b>(\d+)</b> Round Time: <b>([:0-9]+)</b>', response)
-        if match != None:
-            round_shares = int(match.group(2))
-            server = self.servers['digbtc']
-            durationStrings = match.group(3).split(':')
-            server['duration'] = int(durationStrings[0]) * 60 * 60 + int(durationStrings[1]) * 60 + int(durationStrings[2])
-            server['ghash'] = float(match.group(1))
-            self.UpdateShares('digbtc',round_shares, True)
-        else:
-            self.bitHopper.log_msg('regex fail : digbtc')
+        info = json.loads(response)
+        round_shares = int(info['shares_this_round'])
+        server = self.servers['digbtc']
+        server['ghash'] = float(info['pool_total_mhash'])/1000.0
+        self.UpdateShares('digbtc',round_shares)
 
     def btcmp_sharesResponse(self, response):
         info = json.loads(response)
