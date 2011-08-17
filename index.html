@@ -47,6 +47,14 @@
 					    {
 						    sortedKeys.push("5:" + v );
 					    }
+					    else if (data["servers"][v]["cointype"]=="i0c")
+					    {
+						    sortedKeys.push("6:" + v );
+					    }
+					    else if (data["servers"][v]["cointype"]=="ixc")
+					    {
+						    sortedKeys.push("7:" + v );
+					    }
 					    else
 					    {
 						    if (data["servers"][v]["role"]=="disable")
@@ -143,6 +151,12 @@
 							else if ( srv["cointype"] == "nmc" ){
 								h += "<td align=right>" + parseInt((parseFloat(srv["shares"]) / data["nmc_difficulty"]) * 100) + "%</td>"
 							}
+							else if ( srv["cointype"] == "i0c" ){
+								h += "<td align=right>" + parseInt((parseFloat(srv["shares"]) / data["i0c_difficulty"]) * 100) + "%</td>"
+							}
+							else if ( srv["cointype"] == "ixc" ){
+								h += "<td align=right>" + parseInt((parseFloat(srv["shares"]) / data["ixc_difficulty"]) * 100) + "%</td>"
+							}							
 						}
 
 						h += "<td align=right>" + sh + "</td>";

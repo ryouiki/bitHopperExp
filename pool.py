@@ -105,11 +105,16 @@ class Pool():
 
                 ####################################
                 # i0 pools : experimental. could only mine with forced mining
-                'i0guild':{'name':'i0guild',      # experimental i0 pool
+                'i0guild':{'name':'i0guild',       # experimental i0 pool
                     'mine_address':'i0.btcguild.com:8332', 'user':i0guild_user, 'pass':i0guild_pass,
                     'api_address':'http://i0.btcguild.com/',
-                    'cointype':'btc', 'role':'disable', 'penalty':3},
-                
+                    'cointype':'i0c', 'role':'disable', 'penalty':3},
+                    
+                'i0digbtc':{'name':'i0digbtc',      # experimental i0 pool
+                    'mine_address':'i0.digbtc.net:8332', 'user':i0digbtc_user, 'pass':i0digbtc_pass,
+                    'api_address':'http://i0.digbtc.net/',
+                    'cointype':'i0c', 'role':'disable', 'penalty':3},
+
                 # hopping PPLNS or scoring(slush) pools are not recommended
                 # in simulations,
                 # with existing 9 proportional pools, adding one PPLNS or scoring pool enhances only 0 ~ 2% total efficiency at best
@@ -190,7 +195,7 @@ class Pool():
     def set_current(self, server):
         self.current_server = server
 
-    def Force(self, poolName, duration = 300, forceSet = False):
+    def Force(self, poolName, duration = 3000, forceSet = False):
         forced = False
         for server in self.servers:
             if server == poolName and self.servers[server]['role']!='disable':
@@ -277,8 +282,12 @@ class Pool():
         self.UpdateShares('deepbit',round_shares)
 
     def i0guild_sharesResponse(self, response):
-        round_shares = self.bitHopper.difficulty.get_btc_difficulty()*0.431
+        round_shares = self.bitHopper.difficulty.get_i0c_difficulty()*0.431
         self.UpdateShares('i0guild',round_shares)
+
+    def i0digbtc_sharesResponse(self, response):
+        round_shares = self.bitHopper.difficulty.get_i0c_difficulty()*0.431
+        self.UpdateShares('i0digbtc',round_shares)
 
     def slush_sharesResponse(self, response):
         info = json.loads(response)
@@ -351,8 +360,8 @@ class Pool():
             self.bitHopper.log_msg('regex fail : polmine')
 
     def bcpool_sharesResponse(self, response):
-        output_duration = re.search(r'Round Duration: <d class=\"info\">(?:([0-9]+)d&nbsp;)?([0-9]+)h&nbsp;([0-9]+)m&nbsp;', response)
-        output_speed = re.search(r'Pool Speed: <d class=\"info\">([\.0-9]+) Gh', response)
+        output_duration = re.search(r'<p class="title">Round Duration: <d class=\"info\">(?:([0-9]+)d&nbsp;)?([0-9]+)h&nbsp;([0-9]+)m&nbsp;', response)
+        output_speed = re.search(r'<p class="title">.*Pool Speed: <d class=\"info\">([\.0-9]+) Gh', response)
         if output_speed != None and output_duration != None:
             day = 0
             hour = 0

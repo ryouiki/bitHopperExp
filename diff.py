@@ -9,12 +9,20 @@ class Difficulty():
         self.bitHopper = bitHopper
         self.btc_difficulty = 1690906.2047244
         self.nmc_difficulty = 94037.96
+        self.ixc_difficulty = 16384
+        self.i0c_difficulty = 16384
 
     def get_btc_difficulty(self):
         return self.btc_difficulty
 
     def get_nmc_difficulty(self):
         return self.nmc_difficulty
+
+    def get_ixc_difficulty(self):
+        return self.ixc_difficulty
+
+    def get_i0c_difficulty(self):
+        return self.i0c_difficulty
 
     def update_difficulty(self):
         try:
@@ -37,6 +45,19 @@ class Difficulty():
                 if self.nmc_difficulty != new_diff:
                     self.nmc_difficulty = new_diff
                     self.bitHopper.log_msg("NMC difficulty changed  : " + str(new_diff))
+        except:
+            pass
+
+        try:
+            req = urllib2.Request('http://bitcoinx.com/ixcoin/')
+            response = urllib2.urlopen(req)
+            htmlpage = response.read()
+            output = re.search("difficulty: ([0-9\.]*) ", htmlpage)
+            if output != None:
+                new_diff = float(output.group(1))
+                if self.ixc_difficulty != new_diff:
+                    self.ixc_difficulty = new_diff
+                    self.bitHopper.log_msg("ixC difficulty changed  : " + str(new_diff))
         except:
             pass
 

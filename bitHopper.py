@@ -94,7 +94,7 @@ class BitHopper():
         return self.pool.get_current()
 
     def get_progress(self, server):
-        type_diff = { 'btc':self.difficulty.get_btc_difficulty(), 'nmc':self.difficulty.get_nmc_difficulty() }
+        type_diff = { 'btc':self.difficulty.get_btc_difficulty(), 'nmc':self.difficulty.get_nmc_difficulty(), 'ixc':self.difficulty.get_ixc_difficulty(), 'i0c':self.difficulty.get_i0c_difficulty() }
         info = self.pool.get_entry(server)
         return info['wait'] + info['shares'] * info['penalty'] / type_diff[info['cointype']]
 
@@ -326,6 +326,8 @@ class bitSite(resource.Resource):
                 response = json.dumps({"current":bithopper_global.pool.get_current(), 'mhash':bithopper_global.mHashes,
                     'btc_difficulty':bithopper_global.difficulty.get_btc_difficulty(),
                     'nmc_difficulty':bithopper_global.difficulty.get_nmc_difficulty(),
+                    'ixc_difficulty':bithopper_global.difficulty.get_ixc_difficulty(),
+                    'i0c_difficulty':bithopper_global.difficulty.get_i0c_difficulty(),
                     'servers':bithopper_global.pool.get_servers()})
                 request.write(response)
                 request.finish()
