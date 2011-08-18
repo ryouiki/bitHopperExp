@@ -62,13 +62,13 @@ class Pool():
                     'mine_address': 'swepool.net:8337', 'user': swepool_user, 'pass': swepool_pass,
                     'api_address':'http://swepool.net/json?key=' + swepool_user_apikey   },
                 'btcmp':{ 'name': 'btcmp.com',
-                    'mine_address': 'rr.btcmp.com:8332', 'user': btcmp_user, 'pass': btcmp_pass,
+                    'mine_address': 'rr.btcmp.com:8332', 'user': btcmp_user, 'pass': btcmp_pass, 'role':'disable',
                     'api_address':'http://www.btcmp.com/methods/pool/pool_get_stats' },
                 'nofee2':{ 'name': 'nofee2',                     # moved to new site
                     'mine_address': 'nofeemining.appspot.com:80', 'user': nofee2_user, 'pass': nofee2_pass, 'role':'removefromlist',
                     'api_address':'https://nofeemining.appspot.com/api.php' },
                 'digbtc':{ 'name': 'http://digbtc.net/',
-                    'mine_address': 'btc.digbtc.net:8332', 'user': digbtc_user, 'pass': digbtc_pass,
+                    'mine_address': 'btc.digbtc.net:8332', 'user': digbtc_user, 'pass': digbtc_pass, 'role':'disable',
                     'api_address':'http://digbtc.net/papi.php'},
 
                 'bitclockers':{ 'name': 'bitclockers.com',  # not stable
