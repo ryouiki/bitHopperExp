@@ -47,7 +47,7 @@ class Block:
         
         self.poolName = poolName
         
-        minimumScore = { 'deepbit':75, 'btcguild':120, 'bitcoins.lc':150 }
+        minimumScore = { 'deepbit':1, 'btcguild':70, 'bitcoins.lc':150 }
         
         # if we guesstimated this block is from ABC pool
         if self.poolName.find(':') > 0:

@@ -360,7 +360,7 @@ class Pool():
             self.bitHopper.log_msg('regex fail : polmine')
 
     def bcpool_sharesResponse(self, response):
-        output_duration = re.search(r'<p class="title">Round Duration: <d class=\"info\">(?:([0-9]+)d&nbsp;)?([0-9]+)h&nbsp;([0-9]+)m&nbsp;', response)
+        output_duration = re.search(r'<p class="title">Round Duration: <d class=\"info\">(?:([0-9]+)d&nbsp;)?(?:([0-9]+)h&nbsp;)?([0-9]+)m&nbsp;', response)
         output_speed = re.search(r'<p class="title">.*Pool Speed: <d class=\"info\">([\.0-9]+) Gh', response)
         if output_speed != None and output_duration != None:
             day = 0
